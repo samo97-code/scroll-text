@@ -153,12 +153,14 @@ export default {
   mounted() {
     const scrollText = this.$route.query.id
 
-    if (scrollText){
+    if (scrollText) {
       const getParagraphs = document.getElementsByTagName('p');
       const listOfParagraphs = [...getParagraphs]
 
-      listOfParagraphs.forEach((item)=>{
-        if (item.textContent.includes(scrollText)){
+      listOfParagraphs.map((item) => {
+        if (item.textContent.includes(scrollText)) {
+          let re = new RegExp(scrollText, "g");
+          item.innerHTML = item.innerHTML.replace(re, `<mark>${scrollText}</mark>`);
           return item.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
         }
       })
@@ -184,7 +186,7 @@ export default {
     },
     async shareLink() {
       try {
-        const response = await this.$axios.post('/api/save', {"text": this.markedText})
+        const response = await this.$axios.post('/api/save', {"idOne": this.markedText})
         const replaceLink = response.data.link.replaceAll(' ', '%20')
         const link = `${window.location.origin}${replaceLink}`
 
@@ -219,7 +221,8 @@ export default {
   transition: all 0.5ms ease-in-out;
   position: absolute;
 }
-.popup:after{
+
+.popup:after {
   content: '';
   display: block;
   position: absolute;
@@ -232,7 +235,8 @@ export default {
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
 }
-.popup img{
+
+.popup img {
   width: 16px;
   height: 16px;
   display: flex;
