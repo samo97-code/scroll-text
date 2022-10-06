@@ -34,7 +34,7 @@ export default {
   ],
 
   axios: {
-    baseURL: process.env.HOST || 'http://localhost:3000',
+    baseURL: 'https://scroll-text.vercel.app/' || 'http://localhost:3000',
     proxyHeaders: false,
   },
 
