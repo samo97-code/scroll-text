@@ -34,7 +34,7 @@ export default {
   ],
 
   axios: {
-    baseURL: 'http://localhost:3000/',
+    baseURL: process.env.HOST || 'http://localhost:3000',
     proxyHeaders: false,
   },
 
